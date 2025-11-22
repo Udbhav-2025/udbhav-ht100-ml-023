@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Storyteller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🖼️ AI Image Storyteller 🎧</h1>
+    </header>
+
+    <main>
+        <section id="auth-section" class="card">
+            <h2>🔐 Sign In to Begin</h2>
+            <form id="sign-in-form">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+                <p>No account? <a href="#">Sign Up</a></p>
+            </form>
+        </section>
+
+        <section id="upload-section" class="card hidden">
+            <h2>⬆️ Upload Images for Your Story</h2>
+            <p>Select up to 5 images. We'll turn them into an emotional audio tale.</p>
+            <form id="upload-form">
+                <input type="file" id="image-input" accept="image/*" multiple required>
+                <select id="emotion-select" required>
+                    <option value="" disabled selected>Select Story Emotion</option>
+                    <option value="joy">Joyful</option>
+                    <option value="sadness">Melancholic</option>
+                    <option value="excitement">Excited</option>
+                    <option value="mystery">Mysterious</option>
+                </select>
+                <button type="submit">Generate Audio Story</button>
+            </form>
+            <div id="preview-container"></div>
+        </section>
+
+        <section id="result-section" class="card hidden">
+            <h2>🎉 Your Audio Story is Ready!</h2>
+            <p>Listen to the generated tale based on your images.</p>
+            <div id="story-content">
+                </div>
+            <button id="download-button" class="hidden">⬇️ Download Audio Story</button>
+            <button onclick="window.location.reload()">Start New Story</button>
+        </section>
+
+        <div id="loading-overlay" class="hidden">
+            <div class="spinner"></div>
+            <p>Generating story and audio... This may take a moment.</p>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AI Storyteller</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
