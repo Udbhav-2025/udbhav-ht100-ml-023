@@ -1,0 +1,51 @@
+async function generateStory() {
+  const emotion = document.getElementById("emotion-select").value;
+  if (!emotion) return alert("Select an emotion first");
+  if (uploadedFiles.length === 0) return alert("Upload an image first");
+
+  const file = uploadedFiles[0];
+  const apiKey = "AIzaSyAlj69Y_mUWcts6UxBOfnbKPGZiNbHQDIo";
+
+  try {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const base64Image = reader.result.split(",")[1];
+
+      const body = {
+        "contents": [{
+          "parts": [
+            {
+              "inline_data": {
+                "mime_type": file.type,
+                "data": base64Image
+              }
+            },
+            {
+              "text": `Analyze the image and write an assumed emotional story based on the emotion: ${emotion}. 
+                       Tell what might be happening in the scene, what the character could feel, 
+                       and the situation they might be facing.`
+            }
+          ]
+        }]
+      };
+
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        }
+      );
+
+      const data = await res.json();
+      const story = data.candidates?.[0]?.content?.parts?.[0]?.text || "No story generated";
+
+      document.getElementById("output").innerHTML = story;
+    };
+  } catch (err) {
+    console.error(err);
+    alert("Error generating story");
+  }
+}
